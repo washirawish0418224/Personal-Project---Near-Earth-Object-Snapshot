@@ -1,5 +1,6 @@
 import requests
 import os 
+import pandas as pd
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -22,4 +23,8 @@ param_lookup = {
 }
 
 feed_req = requests.get(url_feed, params=param_feed)
+feed_dict = feed_req.json()
+feed_df = pd.DataFrame.from_dict(
+    data = feed_dict
+)
 breakpoint()
