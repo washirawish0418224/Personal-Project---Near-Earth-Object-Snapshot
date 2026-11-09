@@ -11,4 +11,4 @@ __pycache__/
 .env
 
 # Jupyter Notebook
-.ipynb
+*.ipynb
