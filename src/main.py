@@ -6,6 +6,7 @@ from datetime import datetime
 
 load_dotenv()
 api_key = os.getenv('NASA_API_KEY')
+
 now = datetime.now()
 
 #example: https://api.nasa.gov/neo/rest/v1/feed?start_date=START_DATE&end_date=END_DATE&api_key=API_KEY
@@ -27,4 +28,9 @@ feed_dict = feed_req.json()
 feed_df = pd.DataFrame.from_dict(
     data = feed_dict
 )
+
+#extracting three components
+pagination_link = feed_dict['links']
+element_count = feed_dict['element_count']
+neo_data = feed_dict['near_earth_objects']
 breakpoint()
