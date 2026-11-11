@@ -33,4 +33,15 @@ feed_df = pd.DataFrame.from_dict(
 pagination_link = feed_dict['links']
 element_count = feed_dict['element_count']
 neo_data = feed_dict['near_earth_objects']
+
+#data wrangling
+neo_list = []
+for date in neo_data.items():
+    for asteroid in date[1]:
+        asteroid['date'] = date[0]
+        neo_list.append(asteroid)
+
+neo_df_nor= pd.json_normalize(neo_list)
+neo_df_nor_exp = pd.json_normalize(neo_df_nor['close_approach_data'].explode()).add_prefix('cad.')
+neo_df = pd.concat([neo_df_nor.drop(columns='close_approach_data'), neo_df_nor_exp], axis = 1)
 breakpoint()
