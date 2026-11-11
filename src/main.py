@@ -44,4 +44,10 @@ for date in neo_data.items():
 neo_df_nor= pd.json_normalize(neo_list)
 neo_df_nor_exp = pd.json_normalize(neo_df_nor['close_approach_data'].explode()).add_prefix('cad.')
 neo_df = pd.concat([neo_df_nor.drop(columns='close_approach_data'), neo_df_nor_exp], axis = 1)
+
+# append one derived column computed from existing data: estimated volume = (4/3)\pi(r^3)
+radius_max = neo_df['estimated_diameter.kilometers.estimated_diameter_max'] / 2
+radius_min = neo_df['estimated_diameter.kilometers.estimated_diameter_min'] / 2 
+neo_df['estimated_volumn_max.kilometers^3'] = (4 / 3) * np.pi * (radius_max)**3
+neo_df['estimated_volumn_min.kilometers^3'] = (4 / 3) * np.pi * (radius_min)**3
 breakpoint()
